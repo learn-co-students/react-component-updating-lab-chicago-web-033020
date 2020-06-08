@@ -11,6 +11,22 @@ class Timer extends Component {
   }
 
   //Your code here
+  componentDidUpdate(){
+    this.timer = React.createRef()
+    console.log(this.timer.current)
+  }
+
+//The readme says to write "this.timer.current.style.color =  "#" + Math.floor(Math.random() * 16777215).toString(16);"
+// in componentDidUpdate, and the tests pass when I do so. But the code itself is completely broken, erroring out the page.
+// When attempting to log it out dot-by-dot, I can only make it up to this.timer.current. Chaining 'style' onto it breaks the entire thing.
+// Flatiron might need to rework this lab.
+
+shouldComponentUpdate(nextProps, nextState) {
+  if (this.state.time === nextState.time) {
+    return false
+  }
+  return true
+}
 
   componentDidMount() {
     this.interval = setInterval(
@@ -23,6 +39,7 @@ class Timer extends Component {
     clearInterval(this.interval);
   }
 
+  
   render() {
     const { time, color, logText } = this.state;
     return (
